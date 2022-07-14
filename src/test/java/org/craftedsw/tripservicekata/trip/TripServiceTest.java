@@ -14,10 +14,6 @@ public class TripServiceTest {
     private User loggedUser = new User();
     private final TripService tripService = new TripService(){
         @Override
-        protected User loggedUser() {
-            return loggedUser;
-        }
-        @Override
         protected List<Trip> findTripsByUser(User user){
             return user.getTrips();
         }
@@ -25,12 +21,12 @@ public class TripServiceTest {
 	@Test
     void should_throw_exception_when_loggedUser_return_null(){
         loggedUser = NON_LOGGED_USER;
-        assertThrows(UserNotLoggedInException.class, ()->tripService.getTripsByUser(new User()));
+        assertThrows(UserNotLoggedInException.class, ()->tripService.getTripsByUser(new User(), NON_LOGGED_USER));
     }
 
     @Test
     void should_be_empty_list_while_user_friends_not_equal_loggedUser(){
-        List<Trip> tripList = tripService.getTripsByUser(new User());
+        List<Trip> tripList = tripService.getTripsByUser(new User(), loggedUser);
         assertEquals(tripList.size(),0);
     }
 
@@ -42,7 +38,7 @@ public class TripServiceTest {
         user.addTrip(new Trip());
         user.addTrip(new Trip());
         //when
-        List<Trip> tripList = tripService.getTripsByUser(user);
+        List<Trip> tripList = tripService.getTripsByUser(user, loggedUser);
         //then
         assertEquals(tripList,user.getTrips());
     }

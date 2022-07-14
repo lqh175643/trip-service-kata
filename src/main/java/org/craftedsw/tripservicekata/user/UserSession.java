@@ -13,6 +13,10 @@ public class UserSession {
 		return userSession;
 	}
 
+	public static User loggedUser() {
+		return getInstance().getLoggedUser();
+	}
+
 	public User getLoggedUser() {
 		throw new CollaboratorCallException(
 				"UserSession.getLoggedUser() should not be called in an unit test");
