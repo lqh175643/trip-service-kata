@@ -22,7 +22,7 @@ public class User {
 		trips.add(trip);
 	}
 	
-	public List<Trip> trips() {
+	public List<Trip> getTrips() {
 		return trips;
 	}
 
