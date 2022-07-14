@@ -12,14 +12,7 @@ public class TripService {
 		User loggedUser = loggedUser();
 		validate(loggedUser);
 		List<Trip> tripList = new ArrayList<Trip>();
-		boolean isFriend = false;
-		for (User friend : user.getFriends()) {
-			if (friend.equals(loggedUser)) {
-				isFriend = true;
-				break;
-			}
-		}
-		if (isFriend) {
+		if (User.isFriend(user, loggedUser)) {
 			tripList = findTripsByUser(user);
 		}
 		return tripList;
